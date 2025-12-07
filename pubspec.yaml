@@ -1,0 +1,10 @@
+name: catna_api_client
+description: Dart command line client for the CATNA analysis API.
+version: 1.0.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  http: ^1.2.0 # The package you need for making HTTP requests
+  # We only need the dart:io package which is part of the SDK
