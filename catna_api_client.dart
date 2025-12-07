@@ -32,15 +32,19 @@ Future<String> uploadCatnaFile() async {
     if (response.statusCode == 200) {
       print('✅ Analysis successful!');
 
+      final Map<String, dynamic> responseData = json.decode(responseBody);
+
+      const JsonEncoder prettyEncoder = JsonEncoder.withIndent('  ');
+      final String prettyJson = prettyEncoder.convert(responseData);
+
       final timestamp =
           DateTime.now().toIso8601String().replaceAll(RegExp(r'[^0-9]'), '');
       final outputFileName = 'catna_report_$timestamp.json';
       final outputFile = File(outputFileName);
 
-      await outputFile.writeAsString(responseBody);
-      print('💾 Full JSON response saved to: $outputFileName');
+      await outputFile.writeAsString(prettyJson);
+      print('💾 Full JSON response saved and formatted to: $outputFileName');
 
-      final Map<String, dynamic> responseData = json.decode(responseBody);
       print('\n--- Gemini AI Insights ---');
       print(responseData['gemini_insights']);
 
@@ -65,5 +69,5 @@ Future<String> uploadCatnaFile() async {
 }
 
 void main() async {
-  String rawJson = await uploadCatnaFile();
+  uploadCatnaFile();
 }
